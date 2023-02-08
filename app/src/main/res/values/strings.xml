@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">ComposeDemo</string>
     <string name="title_activity_base">BaseActivity</string>
+    <string name="home_fish_pond">鱼塘</string>
+    <string name="home_found">问答</string>
+    <string name="home_essay">文章</string>
+    <string name="home_course">课程</string>
+    <string name="home_me">我的</string>
 </resources>

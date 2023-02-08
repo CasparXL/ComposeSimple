@@ -59,6 +59,7 @@ dependencies {
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.kotlin.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.androidx.tracing.ktx)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.hilt.navigation)

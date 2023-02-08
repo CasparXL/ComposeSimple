@@ -1,12 +1,11 @@
 package com.caspar.cpdemo
 
 import android.os.Bundle
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.navigation.compose.*
 import com.caspar.cpdemo.base.BaseActivity
-import com.caspar.cpdemo.ui.ProjectScreen
-import com.caspar.cpdemo.ui.page.Greeting
+import com.caspar.cpdemo.ui.navigation.ProjectScreen
+import com.caspar.cpdemo.ui.page.HomeScreen
 import com.caspar.cpdemo.ui.page.SplashPage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +20,7 @@ class MainActivity : BaseActivity() {
                 SplashPage(navController)
             }
             composable(route = ProjectScreen.MAIN) {
-                Greeting(name = "Hello Compose")
+                HomeScreen()
             }
         }
 
