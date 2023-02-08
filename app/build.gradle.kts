@@ -40,6 +40,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    javaToolchains {
+        version = "11"
+    }
     buildFeatures {
         compose = true
     }
@@ -49,7 +52,6 @@ android {
     packagingOptions {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
@@ -59,12 +61,18 @@ dependencies {
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.kotlin.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.runtime.compose)
+    implementation("androidx.activity:activity-ktx:1.6.1")
     implementation(libs.androidx.tracing.ktx)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.hilt.navigation)
+    implementation(libs.bundles.retrofit)
     implementation(libs.hilt.android)
     implementation(libs.gson)
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation(libs.mmkv)
     implementation(libs.bundles.immersionbar)
     kapt(libs.bundles.kapt)
     testImplementation(libs.test.impl)

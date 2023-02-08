@@ -6,16 +6,25 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.caspar.cpdemo.R
+import com.caspar.cpdemo.viewmodel.HomeViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -45,29 +54,27 @@ fun FishScreen() {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun FishList() {
+private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
+    val topicList = viewModel.topList.collectAsStateWithLifecycle()
+    val isRefresh = viewModel.swipeRefreshState.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
-    val swipeRefreshState = rememberSwipeRefreshState(false)
-    val scope = rememberCoroutineScope()
     val currentPosition = remember { derivedStateOf { listState.firstVisibleItemIndex } }.value
     val pageSize = remember { derivedStateOf { listState.layoutInfo } }.value.visibleItemsInfo.size
     val pageCount = remember { derivedStateOf { listState.layoutInfo } }.value.totalItemsCount
-    Log.e("浪", "当前下标: ${currentPosition},一页能展示多少条数据:${pageSize},总数据:${pageCount}", )
-    if (currentPosition + pageSize == pageCount && !listState.isScrollInProgress && pageCount!=0){
+    Log.e("浪", "当前下标: ${currentPosition},一页能展示多少条数据:${pageSize},总数据:${pageCount}")
+    if (currentPosition + pageSize == pageCount && !listState.isScrollInProgress && pageCount != 0) {
         Log.e("浪", "滚动到底部了")
     }
     SwipeRefresh(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
-        state = swipeRefreshState,
+        state = rememberSwipeRefreshState(isRefresh.value),
         onRefresh = {
-            scope.launch {
-                swipeRefreshState.isRefreshing = true
-                delay(2000)
-                swipeRefreshState.isRefreshing = false
-            }
+            Log.e("浪", "触发了刷新")
+            viewModel.getList()
         },
         indicator = { state, refreshTrigger ->
             SwipeRefreshIndicator(
@@ -87,17 +94,20 @@ private fun FishList() {
             )
             Column {
                 LazyRow {
-                    items(20) {
+                    items(topicList.value.size) {
                         Column {
-                            Icon(
-                                painter = painterResource(id = R.drawable.home_found_on_ic),
+                            Image(
+                                painter = rememberAsyncImagePainter(
+                                    model = topicList.value[it].cover,
+                                    placeholder = painterResource(id = R.drawable.image_loading_ic),),
                                 contentDescription = "",
                                 modifier = Modifier
                                     .size(size = 45.dp)
+                                    .border(1.dp, Color.Black, RoundedCornerShape(4.dp))
                                     .align(Alignment.CenterHorizontally),
                             )
                             Text(
-                                text = "鱼塘${it}",
+                                text = topicList.value[it].topicName ?: "",
                                 modifier = Modifier
                                     .padding(vertical = 10.dp, horizontal = 15.dp)
                                     .fillMaxWidth(),

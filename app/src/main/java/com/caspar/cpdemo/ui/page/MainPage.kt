@@ -14,6 +14,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -23,6 +24,7 @@ import androidx.tracing.trace
 import com.caspar.cpdemo.ui.icon.Icon
 import com.caspar.cpdemo.ui.navigation.*
 import com.caspar.cpdemo.ui.theme.ComposeDemoTheme
+import com.caspar.cpdemo.viewmodel.HomeViewModel
 
 
 val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
@@ -33,7 +35,10 @@ val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values
     ExperimentalLayoutApi::class
 )
 @Composable
-fun HomeScreen(navController: NavHostController = rememberNavController()) {
+fun HomeScreen(
+    navController: NavHostController = rememberNavController(),
+    viewModel: HomeViewModel = hiltViewModel()
+) {
     Scaffold(
         modifier = Modifier.semantics {
             testTagsAsResourceId = true

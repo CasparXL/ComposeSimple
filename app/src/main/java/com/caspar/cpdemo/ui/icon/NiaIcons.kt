@@ -17,9 +17,6 @@
 package com.caspar.cpdemo.ui.icon
 
 import androidx.annotation.DrawableRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.caspar.cpdemo.R
 
@@ -27,8 +24,6 @@ import com.caspar.cpdemo.R
  * Now in Android icons. Material icons are [ImageVector]s, custom icons are drawable resource IDs.
  */
 object NiaIcons {
-    val AccountCircle = Icons.Outlined.AccountCircle
-    val Add = Icons.Rounded.Add
     const val IconFishPondOn = R.drawable.home_fish_pond_on_ic
     const val IconFishPondOff = R.drawable.home_fish_pond_off_ic
     const val IconFoundOn = R.drawable.home_found_on_ic
