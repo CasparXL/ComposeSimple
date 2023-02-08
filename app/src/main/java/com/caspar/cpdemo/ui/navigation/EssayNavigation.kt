@@ -1,8 +1,11 @@
 package com.caspar.cpdemo.ui.navigation
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -19,9 +22,20 @@ fun NavController.navigateToHomeEssayGraph(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.homeHomeEssayScreen() {
     composable(route = ProjectScreen.HOME_ESSAY) {
-        Text(
-            text = "文章",
-            modifier = Modifier.padding(top = 20.dp)
-        )
+        Column {
+            Text(
+                text = "文章",
+                modifier = Modifier
+                    .padding(vertical = 20.dp)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+            )
+            Spacer(
+                modifier = Modifier
+                    .background(Color.Gray)
+                    .fillMaxWidth()
+                    .height(1.dp)
+            )
+        }
     }
 }
