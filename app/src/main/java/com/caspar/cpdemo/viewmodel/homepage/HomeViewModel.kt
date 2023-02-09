@@ -2,9 +2,7 @@ package com.caspar.cpdemo.viewmodel.homepage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
+import androidx.paging.*
 import com.caspar.cpdemo.bean.ArticleInfo
 import com.caspar.cpdemo.bean.FishPondTopicList
 import com.caspar.cpdemo.bean.paging.ArticleInfoPagingSource

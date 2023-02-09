@@ -1,10 +1,14 @@
 package com.caspar.cpdemo.ui.page
 
+import android.text.Html
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -13,11 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,7 +33,6 @@ import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberAsyncImagePainter
 import com.caspar.cpdemo.R
 import com.caspar.cpdemo.bean.ArticleInfo
-import com.caspar.cpdemo.bean.FishPondTopicList
 import com.caspar.cpdemo.ext.getLocalDataTime
 import com.caspar.cpdemo.ext.timeFormatMillis
 import com.caspar.cpdemo.utils.log.LogUtil
@@ -38,7 +40,6 @@ import com.caspar.cpdemo.viewmodel.homepage.HomeViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.flow.take
 
 /**
  * 首页第一个界面[ProjectScreen.HOME_FISH_POND]
@@ -104,7 +105,6 @@ private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
                                 .background(Color.Gray.copy(alpha = 0.5F))
                                 .height(5.dp)
                                 .fillMaxWidth()
-
                         )
                         ArticleList(article)
                     }
@@ -118,7 +118,7 @@ private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
                                             .fillMaxWidth()
                                             .padding(15.dp)
                                             .clickable {
-                                                list.refresh()
+                                                list.retry()
                                             },
                                         textAlign = TextAlign.Center,
                                     )
@@ -190,8 +190,51 @@ private fun ArticleList(article: ArticleInfo?) {
                 )
             }
         }
+        Text(text = Html.fromHtml(article?.content ?: "").toString())
+        val images = article?.images
+        if (!images.isNullOrEmpty()) {
+            val imageHeight = 120.dp
+            //设置图片高度
+            val height = when (images.size) {
+                in 1..3 -> {
+                    1
+                }
+                in 4..6 -> {
+                    2
+                }
+                in 7..9 -> {
+                    3
+                }
+                else -> {
+                    1
+                }
+            }
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(if (images.size < 3) images.size else 3),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(imageHeight.times(height))
+                    .clip(RoundedCornerShape(15.dp))
+                    .border(15.dp, Color.Transparent, RoundedCornerShape(15.dp))
+            ) {
+                items(images.size) {
+                    Image(
+                        painter = rememberAsyncImagePainter(
+                            model = images[it] ?: "",
+                            placeholder = painterResource(id = R.drawable.image_loading_ic),
+                            error = painterResource(id = R.drawable.image_loading_ic),
+                        ),
+                        modifier = Modifier
+                            .height(imageHeight)
+                            .background(Color.Black),
+                        contentDescription = "用户头像",
+                        contentScale = ContentScale.FillWidth
+                    )
+                }
+            }
+        }
 
-        Row() {
+        Row {
             Text(
                 text = "分享",
                 modifier = Modifier
