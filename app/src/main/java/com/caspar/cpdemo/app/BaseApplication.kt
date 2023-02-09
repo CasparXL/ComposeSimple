@@ -1,6 +1,7 @@
 package com.caspar.cpdemo.app
 
 import android.app.Application
+import com.caspar.cpdemo.utils.log.LogUtil
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +14,11 @@ import kotlinx.coroutines.SupervisorJob
 @HiltAndroidApp
 class BaseApplication : Application() {
 
+    override fun onCreate() {
+        super.onCreate()
+        context = this
+        LogUtil.init(true,"浪")
+    }
     companion object {
         //Application上下文
         lateinit var context: Application

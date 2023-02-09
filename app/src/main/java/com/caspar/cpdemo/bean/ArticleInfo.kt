@@ -1,5 +1,8 @@
 package com.caspar.cpdemo.bean
 
+/**
+ * 首页帖子列表
+ */
 data class ArticleInfo(
     val avatar: String? = null,
     val commentCount: Int? = null,

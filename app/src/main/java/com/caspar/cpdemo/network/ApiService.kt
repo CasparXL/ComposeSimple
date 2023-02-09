@@ -15,7 +15,7 @@ interface ApiService {
     /**
      * 获取推荐内容
      */
-    @GET("ct/content/home/recommend/{page}")
+    @GET("ct/moyu/list/recommend/{page}")
     suspend fun getRecommendContent(@Path("page") page: Int): BasePageBean<List<ArticleInfo>>
 
     /**

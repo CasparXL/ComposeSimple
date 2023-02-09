@@ -11,7 +11,6 @@ coroutines = "1.6.4"
 kotlinCoreKtx = "1.9.0"
 hilt = "2.44.2"
 compose = "1.3.3"
-composeBom = "2023.01.00"
 composeActivity = "1.6.1"
 composeMaterial = "1.3.1"
 composeMaterial3 = "1.0.1"
@@ -22,10 +21,13 @@ retrofit = "2.9.0"
 okhttpLog = "5.0.0-alpha.11"
 lifecycleRuntimeKtx = "2.5.1"
 lifecycleRuntimeCompose = "2.6.0-alpha05"
+pagingRuntime = "3.1.1"
+pagingCompose = "1.0.0-alpha17"
 desugarJdkLibs = "2.0.2"
 junit = "4.13.2"
 testJunit = "1.1.5"
 espressoCore = "3.5.1"
+coil = "2.2.2"
 gson = "2.10.1"
 immersionbar = "3.2.2"
 mmkv = "1.2.15"
@@ -41,6 +43,8 @@ androidx-tracing-ktx = { group = "androidx.tracing", name="tracing-ktx", version
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "pagingRuntime" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
 
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose" }
@@ -49,6 +53,7 @@ compose-material = { group = "androidx.compose.material3", name = "material3", v
 compose-material3 = { group = "androidx.compose.material", name = "material", version.ref = "composeMaterial" }
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 compose-swiperefresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanistSwiperefresh" }
+compose-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanistSwiperefresh" }
 
 hilt_compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "composeHilt" }
 hilt_compose_navigation = { group = "androidx.hilt", name = "hilt-navigation", version.ref = "composeHilt" }
@@ -60,6 +65,7 @@ retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-
 retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
 okhttp-log = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpLog" }
 
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 immersionbar = { group = "com.geyifeng.immersionbar", name = "immersionbar", version.ref = "immersionbar" }
 immersionbar-ktx = { group = "com.geyifeng.immersionbar", name = "immersionbar-ktx", version.ref = "immersionbar" }
@@ -79,9 +85,10 @@ debug_compose_ui_test = { group = "androidx.compose.ui", name = "ui-test-manifes
 
 [bundles]
 #about kotlin compose
-compose = ["compose-ui","compose-ui-preview","compose-activity","compose-material","compose-material3","compose-navigation","compose-swiperefresh"]
+compose = ["compose-ui","compose-ui-preview","compose-activity","compose-material","compose-material3","compose-navigation","compose-swiperefresh","compose-flowlayout"]
 kapt = ["hilt_compiler"]
 hilt_navigation = ["hilt_compose","hilt_compose_navigation"]
+paging = ["paging-runtime","paging-compose"]
 android_test_impl = ["android_test_ext","android_test_espresso","android_test_compose_ui"]
 debug_impl = ["debug_compose_ui","debug_compose_ui_test"]
 #about kotlin coroutines

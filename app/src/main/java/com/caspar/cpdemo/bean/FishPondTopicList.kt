@@ -1,5 +1,8 @@
 package com.caspar.cpdemo.bean
 
+/**
+ * 顶部推荐话题列表
+ */
 data class FishPondTopicList(
     val contentCount: Int? = null,
     val cover: String? = null,

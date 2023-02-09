@@ -24,7 +24,7 @@ import androidx.tracing.trace
 import com.caspar.cpdemo.ui.icon.Icon
 import com.caspar.cpdemo.ui.navigation.*
 import com.caspar.cpdemo.ui.theme.ComposeDemoTheme
-import com.caspar.cpdemo.viewmodel.HomeViewModel
+import com.caspar.cpdemo.viewmodel.homepage.HomeViewModel
 
 
 val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
