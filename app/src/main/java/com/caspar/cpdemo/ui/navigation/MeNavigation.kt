@@ -16,12 +16,12 @@ import androidx.navigation.compose.composable
  * 跳转首页数据
  */
 fun NavController.navigateToHomeMeGraph(navOptions: NavOptions? = null) {
-    this.navigate(ProjectScreen.HOME_ME, navOptions)
+    this.navigate(Screen.HomeMe.page, navOptions)
 }
 
 
 fun NavGraphBuilder.homeHomeMeScreen() {
-    composable(route = ProjectScreen.HOME_ME) {
+    composable(route = Screen.HomeMe.page) {
         Column {
             Text(
                 text = "我的",

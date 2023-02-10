@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.compose.runtime.*
 import androidx.navigation.compose.*
 import com.caspar.cpdemo.base.BaseActivity
-import com.caspar.cpdemo.ui.navigation.ProjectScreen
+import com.caspar.cpdemo.ui.navigation.Screen
 import com.caspar.cpdemo.ui.page.HomeScreen
 import com.caspar.cpdemo.ui.page.SplashPage
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,11 +15,11 @@ class MainActivity : BaseActivity() {
     @Composable
     override fun InitViews(savedInstanceState: Bundle?) {
         val navController = rememberNavController()
-        NavHost(navController, startDestination = ProjectScreen.SPLASH) {
-            composable(route = ProjectScreen.SPLASH) {
+        NavHost(navController, startDestination = Screen.Splash.page) {
+            composable(route = Screen.Splash.page) {
                 SplashPage(navController)
             }
-            composable(route = ProjectScreen.MAIN) {
+            composable(route = Screen.Main.page) {
                 HomeScreen()
             }
         }

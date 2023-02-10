@@ -20,12 +20,12 @@ import com.caspar.cpdemo.ui.page.FishScreen
  * 跳转首页数据
  */
 fun NavController.navigateToHomeFishPondGraph(navOptions: NavOptions? = null) {
-    this.navigate(ProjectScreen.HOME_FISH_POND, navOptions)
+    this.navigate(Screen.HomeFishPond.page, navOptions)
 }
 
 
 fun NavGraphBuilder.homeFishPondScreen() {
-    composable(route = ProjectScreen.HOME_FISH_POND) {
+    composable(route = Screen.HomeFishPond.page) {
         FishScreen()
     }
 }

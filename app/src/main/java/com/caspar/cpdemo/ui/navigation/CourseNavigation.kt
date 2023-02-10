@@ -16,12 +16,12 @@ import androidx.navigation.compose.composable
  * 跳转首页数据
  */
 fun NavController.navigateToHomeCourseGraph(navOptions: NavOptions? = null) {
-    this.navigate(ProjectScreen.HOME_COURSE, navOptions)
+    this.navigate(Screen.HomeCourse.page, navOptions)
 }
 
 
 fun NavGraphBuilder.homeHomeCourseScreen() {
-    composable(route = ProjectScreen.HOME_COURSE) {
+    composable(route = Screen.HomeCourse.page) {
         Column {
             Text(
                 text = "课程",

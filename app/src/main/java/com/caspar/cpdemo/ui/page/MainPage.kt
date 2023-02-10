@@ -37,7 +37,6 @@ val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values
 @Composable
 fun HomeScreen(
     navController: NavHostController = rememberNavController(),
-    viewModel: HomeViewModel = hiltViewModel()
 ) {
     Scaffold(
         modifier = Modifier.semantics {
@@ -55,7 +54,7 @@ fun HomeScreen(
         }) { padding ->
             NavHost(
                 navController = navController,
-                startDestination = ProjectScreen.HOME_FISH_POND,
+                startDestination = Screen.HomeFishPond.page,
                 modifier = Modifier
                     .padding(padding)
                     .consumedWindowInsets(padding)
@@ -145,6 +144,7 @@ private fun NiaBottomBar(
                         )
                     }
                 },
+                alwaysShowLabel = false,
                 label = { Text(stringResource(destination.iconTextId)) },
             )
         }

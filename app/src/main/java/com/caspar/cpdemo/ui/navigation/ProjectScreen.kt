@@ -3,13 +3,12 @@ package com.caspar.cpdemo.ui.navigation
 /**
  * App的界面
  */
-object ProjectScreen {
-    const val SPLASH = "splash"
-    const val MAIN = "main"
-    //首页五个界面
-    const val HOME_FISH_POND = "HOME_FISH_POND"
-    const val HOME_FOUND = "HOME_FOUND"
-    const val HOME_ESSAY = "HOME_ESSAY"
-    const val HOME_COURSE = "HOME_COURSE"
-    const val HOME_ME = "HOME_ME"
+sealed class Screen(val page: String) {
+    object Splash : Screen("Splash")
+    object Main : Screen("Main")
+    object HomeFishPond : Screen("HomeFishPond")
+    object HomeFound : Screen("HomeFound")
+    object HomeEssay : Screen("HomeEssay")
+    object HomeCourse : Screen("HomeCourse")
+    object HomeMe : Screen("HomeMe")
 }
