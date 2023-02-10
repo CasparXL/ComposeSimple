@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -67,6 +68,12 @@ fun FishScreen() {
 @Composable
 private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
     val list = viewModel.list.collectAsLazyPagingItems()
+    val toast = viewModel.toast.collectAsStateWithLifecycle(initialValue = "")
+    if (toast.value.isNotEmpty()) {
+        Snackbar {
+            Text(text = toast.value)
+        }
+    }
     SwipeRefresh(
         modifier = Modifier.fillMaxSize(),
         state = rememberSwipeRefreshState(list.loadState.refresh is LoadState.Loading),
@@ -99,11 +106,14 @@ private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
                     item {
                         TopicList()
                     }
-                    itemsIndexed(list) { _, article ->
+                    itemsIndexed(list) { index, article ->
                         Spacer(
                             modifier = Modifier
                                 .background(Color.Gray.copy(alpha = 0.5F))
                                 .height(5.dp)
+                                .clickable {
+                                    viewModel.updateIndex(article?.id ?: "")
+                                }
                                 .fillMaxWidth()
                         )
                         ArticleList(article)
@@ -158,6 +168,7 @@ private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
 
 @Composable
 private fun ArticleList(article: ArticleInfo?) {
+    val s = rememberScrollState()
     Column(
         Modifier
             .fillMaxWidth()
@@ -190,7 +201,7 @@ private fun ArticleList(article: ArticleInfo?) {
                 )
             }
         }
-        Text(text = Html.fromHtml(article?.content ?: "").toString())
+        Text(text = Html.fromHtml(article?.content ?: "").toString(), modifier = Modifier.padding(15.dp), fontSize = 12.sp)
         val images = article?.images
         if (!images.isNullOrEmpty()) {
             val imageHeight = 120.dp
@@ -216,6 +227,8 @@ private fun ArticleList(article: ArticleInfo?) {
                     .height(imageHeight.times(height))
                     .clip(RoundedCornerShape(15.dp))
                     .border(15.dp, Color.Transparent, RoundedCornerShape(15.dp))
+                    .scrollable(s, Orientation.Horizontal, false)
+                    .scrollable(s, Orientation.Vertical, false)
             ) {
                 items(images.size) {
                     Image(
@@ -225,10 +238,11 @@ private fun ArticleList(article: ArticleInfo?) {
                             error = painterResource(id = R.drawable.image_loading_ic),
                         ),
                         modifier = Modifier
-                            .height(imageHeight)
-                            .background(Color.Black),
+                            .background(Color.Black)
+                            .scrollable(s, Orientation.Horizontal, false)
+                            .scrollable(s, Orientation.Vertical, false),
                         contentDescription = "用户头像",
-                        contentScale = ContentScale.FillWidth
+                        contentScale = ContentScale.FillBounds
                     )
                 }
             }

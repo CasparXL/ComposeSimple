@@ -2,6 +2,7 @@ package com.caspar.cpdemo.network
 
 import com.caspar.cpdemo.bean.ArticleInfo
 import com.caspar.cpdemo.bean.FishPondTopicList
+import com.caspar.cpdemo.network.interceptor.Authenticated
 import com.caspar.cpdemo.network.util.BaseBean
 import com.caspar.cpdemo.network.util.BasePageBean
 import retrofit2.http.*
@@ -16,6 +17,7 @@ interface ApiService {
      * 获取推荐内容
      */
     @GET("ct/moyu/list/recommend/{page}")
+    @Authenticated
     suspend fun getRecommendContent(@Path("page") page: Int): BasePageBean<List<ArticleInfo>>
 
     /**
