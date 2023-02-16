@@ -8,6 +8,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            keyAlias="key0"
+            keyPassword="123456"
+            storeFile = file("../test.jks")
+            storePassword ="123456"
+        }
+    }
     namespace = libs.versions.applicationId.get()
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -28,6 +36,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     //parsed using java 11 syntax

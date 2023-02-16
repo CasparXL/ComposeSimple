@@ -23,9 +23,9 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     //使用combine对Flow进行链接，其中任意Flow发生改变，会刷新整个与Flow相关的所有UI
     val list = Pager(PagingConfig(pageSize = 20)) {
         ArticleInfoPagingSource(repository)
-    }.flow.cachedIn(viewModelScope).combine(infoIndex){ a, b ->
-        a.map { ar->
-            if (b.contains(ar.id)){
+    }.flow.cachedIn(viewModelScope).combine(infoIndex){ list, changedItem ->
+        list.map { ar->
+            if (changedItem.contains(ar.id)){
                 ar.copy(nickname = "测试")
             } else {
                 ar
