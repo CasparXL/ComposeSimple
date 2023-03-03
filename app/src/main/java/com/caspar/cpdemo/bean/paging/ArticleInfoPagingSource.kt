@@ -18,7 +18,7 @@ class ArticleInfoPagingSource(private val repository: HomeRepository) :
             LoadResult.Page(
                 data = it.list ?: arrayListOf(),
                 prevKey = if (it.hasPre == true) nextPage - 1 else null,
-                nextKey = if (it.hasNext == true && nextPage < 8) nextPage + 1 else null
+                nextKey = if (it.hasNext == true) nextPage + 1 else null
             )
         }, onFailure = {
             LoadResult.Error(it)
