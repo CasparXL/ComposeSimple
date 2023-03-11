@@ -3,7 +3,6 @@ package com.caspar.cpdemo.ui.page
 import android.text.Html
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.*
-import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -33,10 +32,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberAsyncImagePainter
 import com.caspar.cpdemo.R
-import com.caspar.cpdemo.bean.ArticleInfo
+import com.caspar.cpdemo.bean.InfoList
 import com.caspar.cpdemo.ext.getLocalDataTime
 import com.caspar.cpdemo.ext.timeFormatMillis
-import com.caspar.cpdemo.utils.log.LogUtil
 import com.caspar.cpdemo.viewmodel.homepage.HomeViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
@@ -167,7 +165,7 @@ private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
 }
 
 @Composable
-private fun ArticleList(article: ArticleInfo?) {
+private fun ArticleList(article: InfoList?) {
     val s = rememberScrollState()
     Column(
         Modifier
@@ -319,7 +317,7 @@ private fun TopicList(viewModel: HomeViewModel = hiltViewModel()) {
 @Composable
 fun TestAir() {
     ArticleList(
-        ArticleInfo(
+        InfoList(
             avatar = "https://cdn.sunofbeaches.com/emoji/7.png",
             nickname = "test",
             createTime = "2023-02-09 09:59:00"

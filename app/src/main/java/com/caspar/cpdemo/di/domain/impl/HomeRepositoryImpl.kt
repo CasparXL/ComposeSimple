@@ -1,35 +1,27 @@
 package com.caspar.cpdemo.di.domain.impl
 
-import androidx.paging.PagingSource
-import com.caspar.cpdemo.bean.ArticleInfo
-import com.caspar.cpdemo.bean.FishPondTopicList
-import com.caspar.cpdemo.di.BodyOkHttpClient
+import com.caspar.cpdemo.bean.ArticleInfoBean
+import com.caspar.cpdemo.bean.BaseBean
+import com.caspar.cpdemo.bean.FishPond
 import com.caspar.cpdemo.di.domain.HomeRepository
-import com.caspar.cpdemo.network.ApiService
-import com.caspar.cpdemo.network.util.BasePageBean
-import com.caspar.cpdemo.network.util.PageBean
-import com.caspar.cpdemo.network.util.basePageResult
-import com.caspar.cpdemo.network.util.baseResult
+import com.caspar.cpdemo.network.util.*
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.request.*
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
-    @BodyOkHttpClient private val api: ApiService
+    private val api: HttpClient
 ) : HomeRepository {
-    override suspend fun getRecommendContent(page: Int): Result<PageBean<List<ArticleInfo>>> {
-        val baseResult = basePageResult {
-            api.getRecommendContent(page)
+    override suspend fun getRecommendContent(page: Int): Result<ArticleInfoBean> {
+        return ktorResult {
+            api.get("/ct/moyu/list/recommend/${page}").body()
         }
-        return baseResult
     }
 
-    override suspend fun loadTopicList(): Result<List<FishPondTopicList>> {
-        val baseResult = baseResult {
-            api.loadTopicList()
+    override suspend fun loadTopicList(): Result<List<FishPond>> {
+        return ktorResult {
+            api.get("/ct/moyu/topic").body<BaseBean<List<FishPond>>>().data?: listOf()
         }
-        return baseResult.fold(onSuccess = {
-            Result.success(it)
-        }, onFailure = {
-            Result.failure(it)
-        })
     }
 }

@@ -17,7 +17,7 @@ composeMaterial3 = "1.0.1"
 composeNavigation = "2.5.3"
 accompanistSwiperefresh = "0.27.0"
 composeHilt = "1.0.0"
-retrofit = "2.9.0"
+ktor = "2.2.4"
 okhttpLog = "5.0.0-alpha.11"
 lifecycleRuntimeKtx = "2.6.0-alpha05"
 lifecycleRuntimeCompose = "2.6.0-alpha05"
@@ -60,10 +60,11 @@ hilt_compose_navigation = { group = "androidx.hilt", name = "hilt-navigation", v
 hilt_compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt_android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
-okhttp-log = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpLog" }
+ktor-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
+ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-gson = { group = "io.ktor", name = "ktor-serialization-gson", version.ref = "ktor" }
+ktor-auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
 
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
@@ -93,8 +94,8 @@ android_test_impl = ["android_test_ext","android_test_espresso","android_test_co
 debug_impl = ["debug_compose_ui","debug_compose_ui_test"]
 #about kotlin coroutines
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
-#about retrofit
-retrofit = ["retrofit", "retrofit-converter-gson", "retrofit-converter-scalars", "okhttp-log"]
+#ktor about
+ktor = ["ktor-android","ktor-logging","ktor-negotiation","ktor-gson","ktor-auth"]
 #Immersive status bar
 immersionbar = ["immersionbar", "immersionbar-ktx"]
 

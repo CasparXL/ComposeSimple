@@ -8,7 +8,7 @@ const val IS_FIRST = "isFirst"
 
 const val APP_AUTO_CLEAN_CACHE = "appAutoCleanCache"
 
-const val BASE_URL = "https://api.sunofbeaches.com/"
+const val BASE_URL = "api.sunofbeaches.com"
 
 const val DEFAULT_URL =
     "http://service.picasso.adesk.com/v1/vertical/vertical?disorder=true&limit=10&skip=0&adult=false&first=1&url=http%3A%2F%2Fservice.picasso.adesk.com%2Fv1%2Fvertical%2Fvertical&order=hot"

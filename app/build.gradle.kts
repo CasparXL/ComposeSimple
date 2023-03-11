@@ -76,7 +76,7 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.hilt.navigation)
-    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.ktor)
     implementation(libs.bundles.paging)
     implementation(libs.hilt.android)
     implementation(libs.gson)
