@@ -14,7 +14,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -24,7 +23,6 @@ import androidx.tracing.trace
 import com.caspar.cpdemo.ui.icon.Icon
 import com.caspar.cpdemo.ui.navigation.*
 import com.caspar.cpdemo.ui.theme.ComposeDemoTheme
-import com.caspar.cpdemo.viewmodel.homepage.HomeViewModel
 
 
 val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
@@ -54,20 +52,18 @@ fun HomeScreen(
         }) { padding ->
             NavHost(
                 navController = navController,
-                startDestination = Screen.HomeFishPond.page,
+                startDestination = Screen.HomeFirst.page,
                 modifier = Modifier
                     .padding(padding)
-                    .consumedWindowInsets(padding)
+                    .consumeWindowInsets(padding)
                     .windowInsetsPadding(
                         WindowInsets.safeDrawing.only(
                             WindowInsetsSides.Horizontal,
                         ),
                     )
             ) {
-                homeFishPondScreen()
+                homeFirstScreen()
                 homeHomeFoundScreen()
-                homeHomeEssayScreen()
-                homeHomeCourseScreen()
                 homeHomeMeScreen()
             }
         }
@@ -105,19 +101,13 @@ private fun NiaBottomBar(
                         }
                         currentDestination = destination.name
                         when (destination) {
-                            TopLevelDestination.FISH_POND -> navHostController.navigateToHomeFishPondGraph(
+                            TopLevelDestination.HOME_FIRST -> navHostController.navigateToHomeFirstGraph(
                                 topLevelNavOptions
                             )
-                            TopLevelDestination.FOUND -> navHostController.navigateToHomeFoundGraph(
+                            TopLevelDestination.HOME_OTHER -> navHostController.navigateToHomeFoundGraph(
                                 topLevelNavOptions
                             )
-                            TopLevelDestination.ESSAY -> navHostController.navigateToHomeEssayGraph(
-                                topLevelNavOptions
-                            )
-                            TopLevelDestination.COURSE -> navHostController.navigateToHomeCourseGraph(
-                                topLevelNavOptions
-                            )
-                            TopLevelDestination.ME -> navHostController.navigateToHomeMeGraph(
+                            TopLevelDestination.HOME_ME -> navHostController.navigateToHomeMeGraph(
                                 topLevelNavOptions
                             )
                         }
@@ -144,7 +134,7 @@ private fun NiaBottomBar(
                         )
                     }
                 },
-                alwaysShowLabel = false,
+                alwaysShowLabel = true,
                 label = { Text(stringResource(destination.iconTextId)) },
             )
         }

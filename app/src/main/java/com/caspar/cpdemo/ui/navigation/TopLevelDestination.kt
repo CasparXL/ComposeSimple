@@ -32,31 +32,19 @@ enum class TopLevelDestination(
     val iconTextId: Int,
     val titleTextId: Int,
 ) {
-    FISH_POND(
+    HOME_FIRST(
         selectedIcon = Icon.DrawableResourceIcon(NiaIcons.IconFishPondOn),
         unselectedIcon = Icon.DrawableResourceIcon(NiaIcons.IconFishPondOff),
-        iconTextId = R.string.home_fish_pond,
-        titleTextId = R.string.home_fish_pond,
+        iconTextId = R.string.home_first,
+        titleTextId = R.string.home_first,
     ),
-    FOUND(
+    HOME_OTHER(
         selectedIcon = Icon.DrawableResourceIcon(NiaIcons.IconFoundOn),
         unselectedIcon = Icon.DrawableResourceIcon(NiaIcons.IconFoundOff),
         iconTextId = R.string.home_found,
         titleTextId = R.string.home_found,
     ),
-    ESSAY(
-        selectedIcon = Icon.DrawableResourceIcon(NiaIcons.IconEssayOn),
-        unselectedIcon = Icon.DrawableResourceIcon(NiaIcons.IconEssayOff),
-        iconTextId = R.string.home_essay,
-        titleTextId = R.string.home_essay,
-    ),
-    COURSE(
-        selectedIcon = Icon.DrawableResourceIcon(NiaIcons.IconCourseOn),
-        unselectedIcon = Icon.DrawableResourceIcon(NiaIcons.IconCourseOff),
-        iconTextId = R.string.home_course,
-        titleTextId = R.string.home_course,
-    ),
-    ME(
+    HOME_ME(
         selectedIcon = Icon.DrawableResourceIcon(NiaIcons.IconMeOn),
         unselectedIcon = Icon.DrawableResourceIcon(NiaIcons.IconMeOff),
         iconTextId = R.string.home_me,
