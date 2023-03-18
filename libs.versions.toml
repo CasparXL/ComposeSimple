@@ -39,7 +39,7 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlin-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "kotlinCoreKtx" }
 
-androidx-tracing-ktx = { group = "androidx.tracing", name="tracing-ktx", version.ref = "androidxTracing" }
+androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", version.ref = "androidxTracing" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
@@ -95,7 +95,7 @@ debug_impl = ["debug_compose_ui","debug_compose_ui_test"]
 #about kotlin coroutines
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
 #ktor about
-ktor = ["ktor-android","ktor-logging","ktor-negotiation","ktor-gson","ktor-auth"]
+ktor = ["ktor-android", "ktor-logging", "ktor-negotiation", "ktor-gson", "ktor-auth"]
 #Immersive status bar
 immersionbar = ["immersionbar", "immersionbar-ktx"]
 

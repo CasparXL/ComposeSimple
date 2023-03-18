@@ -1,3 +1,9 @@
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id(libs.plugins.android.application.get().pluginId)
@@ -61,6 +67,22 @@ android {
     packagingOptions {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+        }
+    }
+    //apk输出格式
+    applicationVariants.all {
+        val dtfInput = DateTimeFormatter.ofPattern("yyyyMMddHHmmss", Locale.getDefault())
+        val format = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).format(dtfInput)
+        // Apk 输出配置
+        val buildType = buildType.name
+        outputs.all {
+            if (this is com.android.build.gradle.internal.api.ApkVariantOutputImpl) {
+                outputFileName = if (buildType == "release") {
+                    "${rootProject.name}_v${versionCode}_${format}_release.apk"
+                } else {
+                    "${rootProject.name}_v${versionCode}_${format}_debug.apk"
+                }
+            }
         }
     }
 }
