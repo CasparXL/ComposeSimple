@@ -7,17 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-
-/**
- * 跳转首页数据
- */
-fun NavController.navigateToHomeMeGraph(navOptions: NavOptions? = null) {
-    this.navigate(Screen.HomeMe.page, navOptions)
-}
+import androidx.navigation.compose.rememberNavController
+import com.caspar.cpdemo.ui.page.FishScreen
+import com.caspar.cpdemo.ui.page.OtherPage
 
 
 fun NavGraphBuilder.homeHomeMeScreen() {
@@ -37,5 +32,17 @@ fun NavGraphBuilder.homeHomeMeScreen() {
                     .height(1.dp)
             )
         }
+    }
+}
+
+fun NavGraphBuilder.homeHomeFoundScreen() {
+    composable(route = Screen.HomeOther.page) {
+        OtherPage()
+    }
+}
+
+fun NavGraphBuilder.homeFirstScreen() {
+    composable(route = Screen.HomeFirst.page) {
+        FishScreen()
     }
 }

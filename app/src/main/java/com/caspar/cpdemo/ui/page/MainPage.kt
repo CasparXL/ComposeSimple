@@ -14,15 +14,19 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import androidx.tracing.trace
 import com.caspar.cpdemo.ui.icon.Icon
 import com.caspar.cpdemo.ui.navigation.*
 import com.caspar.cpdemo.ui.theme.ComposeDemoTheme
+import com.caspar.cpdemo.utils.log.LogUtil
 
 
 val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
@@ -47,6 +51,7 @@ fun HomeScreen(
             NiaBottomBar(
                 navHostController = navController,
                 destinations = topLevelDestinations,
+                currentDestination = navController.currentBackStackEntryAsState().value?.destination,
                 modifier = Modifier.testTag("NiaBottomBar"),
             )
         }) { padding ->
@@ -69,22 +74,22 @@ fun HomeScreen(
         }
 }
 
+@SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
 private fun NiaBottomBar(
     navHostController: NavHostController,
     destinations: List<TopLevelDestination>,
+    currentDestination: NavDestination? = null,
     modifier: Modifier = Modifier,
 ) {
-    var currentDestination by remember {
-        mutableStateOf(destinations.first().name)
-    }
     NiaNavigationBar(
         modifier = modifier,
     ) {
         destinations.forEach { destination ->
             NiaNavigationBarItem(
-                selected = destination.name == currentDestination,
+                selected = destination.name == currentDestination?.route,
                 onClick = {
+                    LogUtil.d("更新数据${destination.name},当前数据->${currentDestination?.route}")
                     trace("Navigation: ${destination.name}") {
                         val topLevelNavOptions = navOptions {
                             // Pop up to the start destination of the graph to
@@ -99,22 +104,15 @@ private fun NiaBottomBar(
                             // Restore state when reselecting a previously selected item
                             restoreState = true
                         }
-                        currentDestination = destination.name
                         when (destination) {
-                            TopLevelDestination.HOME_FIRST -> navHostController.navigateToHomeFirstGraph(
-                                topLevelNavOptions
-                            )
-                            TopLevelDestination.HOME_OTHER -> navHostController.navigateToHomeFoundGraph(
-                                topLevelNavOptions
-                            )
-                            TopLevelDestination.HOME_ME -> navHostController.navigateToHomeMeGraph(
-                                topLevelNavOptions
-                            )
+                            TopLevelDestination.HOME_FIRST -> navHostController.navigate(route = Screen.HomeFirst.page, navOptions = topLevelNavOptions)
+                            TopLevelDestination.HOME_OTHER -> navHostController.navigate(route = Screen.HomeOther.page, navOptions = topLevelNavOptions)
+                            TopLevelDestination.HOME_ME -> navHostController.navigate(route = Screen.HomeMe.page, navOptions = topLevelNavOptions)
                         }
                     }
                 },
                 icon = {
-                    val icon = if (destination.name == currentDestination) {
+                    val icon = if (destination.name == currentDestination?.route) {
                         destination.selectedIcon
                     } else {
                         destination.unselectedIcon
