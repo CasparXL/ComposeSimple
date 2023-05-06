@@ -48,15 +48,15 @@ android {
     //parsed using java 11 syntax
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     //kotlin的java11支持
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     javaToolchains {
-        version = "11"
+        version = "17"
     }
     buildFeatures {
         compose = true

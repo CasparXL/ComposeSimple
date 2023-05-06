@@ -8,22 +8,21 @@ plugins {
 }
 
 allprojects {
-    /*configurations.all {
+    configurations.all {
         resolutionStrategy.eachDependency {
-            if (requested.group == libs.kotlin.stdlib.get().module.group) {
-                if (requested.name.startsWith(libs.kotlin.stdlib.get().module.name)) {
-                    useVersion(libs.versions.kotlin.get())
+            if (requested.group == "org.jetbrains.kotlin") {
+                if (requested.name.startsWith("kotlin-stdlib")) {
+                    useVersion("1.8.20")
                 }
-            } else if (requested.group == libs.kotlin.reflect.get().module.group){
-                if (requested.name.startsWith(libs.kotlin.reflect.get().module.name)) {
-                    useVersion(libs.versions.kotlin.get())
+                if (requested.name.startsWith("kotlin-reflect")) {
+                    useVersion("1.8.20")
                 }
             }
         }
-    }*/
+    }
     tasks.withType(JavaCompile::class.java) {
         options.encoding = "UTF-8"
-        version = 11
+        version = 17
     }
 
     tasks.withType(Javadoc::class.java) {
