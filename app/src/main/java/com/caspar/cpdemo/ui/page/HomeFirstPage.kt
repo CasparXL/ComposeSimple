@@ -246,6 +246,7 @@ private fun ArticleList(article: InfoList?) {
                         ),
                         modifier = Modifier
                             .background(Color.Black)
+                            .height(imageHeight)
                             .scrollable(s, Orientation.Horizontal, false)
                             .scrollable(s, Orientation.Vertical, false),
                         contentDescription = "用户头像",
@@ -255,11 +256,12 @@ private fun ArticleList(article: InfoList?) {
             }
         }
 
-        Row {
+        Row(Modifier.padding(top = 15.dp)) {
             Text(
                 text = "分享",
                 modifier = Modifier
                     .weight(1F)
+                    .background(Color(0xFF0381FF))
                     .fillMaxWidth()
                     .clickable {
 
