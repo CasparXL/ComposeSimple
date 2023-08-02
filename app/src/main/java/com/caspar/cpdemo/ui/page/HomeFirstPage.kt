@@ -3,6 +3,7 @@ package com.caspar.cpdemo.ui.page
 import android.text.Html
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.TextField
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -19,11 +21,14 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -40,6 +45,7 @@ import com.caspar.cpdemo.R
 import com.caspar.cpdemo.bean.InfoList
 import com.caspar.cpdemo.ext.getLocalDataTime
 import com.caspar.cpdemo.ext.timeFormatMillis
+import com.caspar.cpdemo.utils.log.LogUtil
 import com.caspar.cpdemo.viewmodel.homepage.HomeViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
@@ -166,6 +172,7 @@ private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun ArticleList(article: InfoList?) {
     val s = rememberScrollState()
@@ -255,16 +262,19 @@ private fun ArticleList(article: InfoList?) {
                 }
             }
         }
-
         Row(Modifier.padding(top = 15.dp)) {
             Text(
                 text = "分享",
                 modifier = Modifier
                     .weight(1F)
-                    .background(Color(0xFF0381FF))
                     .fillMaxWidth()
-                    .clickable {
-
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember {
+                            MutableInteractionSource()
+                        }
+                    ) {
+                        //LocalSoftwareKeyboardController.current 可以隐藏键盘，但必须当前界面有输入框，否则无效
                     },
                 textAlign = TextAlign.Center
             )

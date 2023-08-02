@@ -15,7 +15,6 @@ abstract class BaseActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         immersionBar {
             statusBarDarkFont(true)
-            keyboardEnable(true)
         }
         setContent {
             ComposeDemoTheme {
