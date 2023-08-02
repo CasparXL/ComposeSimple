@@ -159,7 +159,7 @@ private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
                 .size(30.dp)
                 .align(Alignment.TopCenter),
             state = pullRefresh,
-            refreshing = true,
+            refreshing = list.loadState.refresh is LoadState.Loading,
             contentColor = Color(0xFFFF6500),
             backgroundColor = Color.White
         )
