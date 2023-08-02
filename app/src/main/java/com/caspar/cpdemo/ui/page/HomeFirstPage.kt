@@ -10,6 +10,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.PullRefreshState
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -59,108 +64,105 @@ fun FishScreen() {
                 .fillMaxWidth()
                 .height(1.dp)
         )
+        Text(
+            text = "推荐话题",
+            modifier = Modifier
+                .padding(15.dp),
+            textAlign = TextAlign.Center,
+        )
         FishList()
+        TopicList()
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
     val list = viewModel.list.collectAsLazyPagingItems()
+    val pullRefresh = rememberPullRefreshState(
+        refreshing = list.loadState.refresh is LoadState.Loading,
+        onRefresh = {
+            viewModel.getList()
+            list.refresh()
+        })
     val toast = viewModel.toast.collectAsStateWithLifecycle(initialValue = "")
     if (toast.value.isNotEmpty()) {
         Snackbar {
             Text(text = toast.value)
         }
     }
-    SwipeRefresh(
-        modifier = Modifier.fillMaxSize(),
-        state = rememberSwipeRefreshState(list.loadState.refresh is LoadState.Loading),
-        onRefresh = {
-            viewModel.getList()
-            list.refresh()
-        },
-        indicator = { state, refreshTrigger ->
-            SwipeRefreshIndicator(
-                state = state,
-                refreshTriggerDistance = refreshTrigger,
-                backgroundColor = Color.Green,
-                contentColor = Color.DarkGray
-            )
-        },
+    Box(
+        modifier = Modifier
+            .pullRefresh(pullRefresh)
     ) {
-        Column {
-            Text(
-                text = "推荐话题",
-                modifier = Modifier
-                    .padding(15.dp),
-                textAlign = TextAlign.Center,
-            )
-            Column {
-                LazyColumn(
-                    Modifier
+        LazyColumn(Modifier.fillMaxSize()) {
+            itemsIndexed(list) { index, article ->
+                Spacer(
+                    modifier = Modifier
+                        .background(Color.Gray.copy(alpha = 0.5F))
+                        .height(5.dp)
+                        .clickable {
+                            viewModel.updateIndex(article?.id ?: "")
+                        }
                         .fillMaxWidth()
-                        .weight(1F)
-                ) {
-                    item {
-                        TopicList()
+                )
+                ArticleList(article)
+            }
+            item {
+                when (list.loadState.append) {
+                    is LoadState.Error -> {
+                        Box(contentAlignment = Alignment.Center) {
+                            Text(
+                                text = "加载失败,点击重新加载",
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(15.dp)
+                                    .clickable {
+                                        list.retry()
+                                    },
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                     }
-                    itemsIndexed(list) { index, article ->
-                        Spacer(
-                            modifier = Modifier
-                                .background(Color.Gray.copy(alpha = 0.5F))
-                                .height(5.dp)
-                                .clickable {
-                                    viewModel.updateIndex(article?.id ?: "")
-                                }
-                                .fillMaxWidth()
-                        )
-                        ArticleList(article)
+
+                    LoadState.Loading -> {
+                        Box(contentAlignment = Alignment.Center) {
+                            Text(
+                                text = "加载中",
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(15.dp),
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                     }
-                    item {
-                        when (list.loadState.append) {
-                            is LoadState.Error -> {
-                                Box(contentAlignment = Alignment.Center) {
-                                    Text(
-                                        text = "加载失败,点击重新加载",
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .padding(15.dp)
-                                            .clickable {
-                                                list.retry()
-                                            },
-                                        textAlign = TextAlign.Center,
-                                    )
-                                }
-                            }
-                            LoadState.Loading -> {
-                                Box(contentAlignment = Alignment.Center) {
-                                    Text(
-                                        text = "加载中",
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .padding(15.dp),
-                                        textAlign = TextAlign.Center,
-                                    )
-                                }
-                            }
-                            is LoadState.NotLoading -> {
-                                if (list.loadState.append.endOfPaginationReached) {
-                                    Box(contentAlignment = Alignment.Center) {
-                                        Text(
-                                            text = "已经到底了，没有数据可以加载了",
-                                            Modifier
-                                                .fillMaxWidth()
-                                                .padding(15.dp),
-                                            textAlign = TextAlign.Center,
-                                        )
-                                    }
-                                }
+
+                    is LoadState.NotLoading -> {
+                        if (list.loadState.append.endOfPaginationReached) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Text(
+                                    text = "已经到底了，没有数据可以加载了",
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(15.dp),
+                                    textAlign = TextAlign.Center,
+                                )
                             }
                         }
                     }
                 }
             }
         }
+        PullRefreshIndicator(
+            modifier = Modifier
+                .padding(15.dp)
+                .size(30.dp)
+                .align(Alignment.TopCenter),
+            state = pullRefresh,
+            refreshing = true,
+            contentColor = Color(0xFFFF6500),
+            backgroundColor = Color.White
+        )
     }
 }
 
@@ -199,7 +201,11 @@ private fun ArticleList(article: InfoList?) {
                 )
             }
         }
-        Text(text = Html.fromHtml(article?.content ?: "").toString(), modifier = Modifier.padding(15.dp), fontSize = 12.sp)
+        Text(
+            text = Html.fromHtml(article?.content ?: "").toString(),
+            modifier = Modifier.padding(15.dp),
+            fontSize = 12.sp
+        )
         val images = article?.images
         if (!images.isNullOrEmpty()) {
             val imageHeight = 120.dp
@@ -208,12 +214,15 @@ private fun ArticleList(article: InfoList?) {
                 in 1..3 -> {
                     1
                 }
+
                 in 4..6 -> {
                     2
                 }
+
                 in 7..9 -> {
                     3
                 }
+
                 else -> {
                     1
                 }

@@ -28,12 +28,12 @@ fun SplashPage(navController: NavController = rememberNavController()) {
     }
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(durationMillis = 3000), label = ""
+        animationSpec = tween(durationMillis = 1500), label = ""
     )
     //延迟跳转新界面，并从堆栈中移除
     LaunchedEffect(true) {
         startAnimation = true
-        delay(4000)
+        delay(2000)
         navController.navigationAndFinish(
             startPage = Screen.Main.page,
         )
