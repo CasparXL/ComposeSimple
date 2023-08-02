@@ -1,25 +1,19 @@
 package com.caspar.cpdemo.ui.page
 
-import android.window.SplashScreenView
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -34,7 +28,7 @@ fun SplashPage(navController: NavController = rememberNavController()) {
     }
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(durationMillis = 3000)
+        animationSpec = tween(durationMillis = 3000), label = ""
     )
     //延迟跳转新界面，并从堆栈中移除
     LaunchedEffect(true) {
@@ -42,7 +36,6 @@ fun SplashPage(navController: NavController = rememberNavController()) {
         delay(4000)
         navController.navigationAndFinish(
             startPage = Screen.Main.page,
-            finishPages = arrayOf(Screen.Splash.page)
         )
     }
     Splash(alphaAnim.value)

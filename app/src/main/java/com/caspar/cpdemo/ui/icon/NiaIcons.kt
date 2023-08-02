@@ -24,16 +24,16 @@ import com.caspar.cpdemo.R
  * Now in Android icons. Material icons are [ImageVector]s, custom icons are drawable resource IDs.
  */
 object NiaIcons {
-    const val IconFishPondOn = R.drawable.home_fish_pond_on_ic
-    const val IconFishPondOff = R.drawable.home_fish_pond_off_ic
-    const val IconFoundOn = R.drawable.home_found_on_ic
-    const val IconFoundOff = R.drawable.home_found_off_ic
-    const val IconEssayOn = R.drawable.home_home_on_ic
-    const val IconEssayOff = R.drawable.home_home_off_ic
-    const val IconCourseOn = R.drawable.home_course_on_ic
-    const val IconCourseOff = R.drawable.home_course_off_ic
-    const val IconMeOn = R.drawable.home_me_on_ic
-    const val IconMeOff = R.drawable.home_me_off_ic
+    val IconFishPondOn = R.drawable.home_fish_pond_on_ic
+    val IconFishPondOff = R.drawable.home_fish_pond_off_ic
+    val IconFoundOn = R.drawable.home_found_on_ic
+    val IconFoundOff = R.drawable.home_found_off_ic
+    val IconEssayOn = R.drawable.home_home_on_ic
+    val IconEssayOff = R.drawable.home_home_off_ic
+    val IconCourseOn = R.drawable.home_course_on_ic
+    val IconCourseOff = R.drawable.home_course_off_ic
+    val IconMeOn = R.drawable.home_me_on_ic
+    val IconMeOff = R.drawable.home_me_off_ic
 }
 
 /**
