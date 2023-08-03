@@ -76,8 +76,8 @@ fun FishScreen() {
                 .padding(15.dp),
             textAlign = TextAlign.Center,
         )
-        FishList()
         TopicList()
+        FishList()
     }
 }
 
