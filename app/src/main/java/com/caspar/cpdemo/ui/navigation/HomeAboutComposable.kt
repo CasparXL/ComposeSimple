@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.caspar.cpdemo.ui.page.FishScreen
 import com.caspar.cpdemo.ui.page.OtherPage
+import com.caspar.cpdemo.viewmodel.homepage.HomeViewModel
 
 
 fun NavGraphBuilder.homeHomeMeScreen() {
@@ -41,8 +42,8 @@ fun NavGraphBuilder.homeHomeFoundScreen() {
     }
 }
 
-fun NavGraphBuilder.homeFirstScreen() {
+fun NavGraphBuilder.homeFirstScreen(viewModel:HomeViewModel) {
     composable(route = Screen.HomeFirst.page) {
-        FishScreen()
+        FishScreen(viewModel)
     }
 }

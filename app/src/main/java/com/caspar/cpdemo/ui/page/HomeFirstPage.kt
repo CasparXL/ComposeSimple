@@ -17,6 +17,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
@@ -55,7 +57,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
  * 首页第一个界面[ProjectScreen.HOME_FISH_POND]
  */
 @Composable
-fun FishScreen() {
+fun FishScreen(viewModel: HomeViewModel) {
     Column {
         Text(
             text = "鱼塘",
@@ -77,13 +79,13 @@ fun FishScreen() {
             textAlign = TextAlign.Center,
         )
         TopicList()
-        FishList()
+        FishList(viewModel)
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
+private fun FishList(viewModel: HomeViewModel) {
     val list = viewModel.list.collectAsLazyPagingItems()
     val pullRefresh = rememberPullRefreshState(
         refreshing = list.loadState.refresh is LoadState.Loading,
@@ -91,12 +93,6 @@ private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
             viewModel.getList()
             list.refresh()
         })
-    val toast = viewModel.toast.collectAsStateWithLifecycle(initialValue = "")
-    if (toast.value.isNotEmpty()) {
-        Snackbar {
-            Text(text = toast.value)
-        }
-    }
     Box(
         modifier = Modifier
             .pullRefresh(pullRefresh)

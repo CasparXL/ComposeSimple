@@ -2,6 +2,7 @@ package com.caspar.cpdemo.ui.page
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -14,7 +15,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -27,11 +30,13 @@ import com.caspar.cpdemo.ui.icon.Icon
 import com.caspar.cpdemo.ui.navigation.*
 import com.caspar.cpdemo.ui.theme.ComposeDemoTheme
 import com.caspar.cpdemo.utils.log.LogUtil
+import com.caspar.cpdemo.viewmodel.homepage.HomeViewModel
+import kotlinx.coroutines.launch
 
 
 val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @OptIn(
     ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class,
     ExperimentalLayoutApi::class
@@ -40,6 +45,8 @@ val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values
 fun HomeScreen(
     navController: NavHostController = rememberNavController(),
 ) {
+    val viewModel = hiltViewModel<HomeViewModel>()
+    val snackbarHostState by remember { mutableStateOf(viewModel.snackBarHost) }
     Scaffold(
         modifier = Modifier.semantics {
             testTagsAsResourceId = true
@@ -54,24 +61,24 @@ fun HomeScreen(
                 currentDestination = navController.currentBackStackEntryAsState().value?.destination,
                 modifier = Modifier.testTag("NiaBottomBar"),
             )
-        }) { padding ->
-            NavHost(
-                navController = navController,
-                startDestination = Screen.HomeFirst.page,
-                modifier = Modifier
-                    .padding(padding)
-                    .consumeWindowInsets(padding)
-                    .windowInsetsPadding(
-                        WindowInsets.safeDrawing.only(
-                            WindowInsetsSides.Horizontal,
-                        ),
-                    )
-            ) {
-                homeFirstScreen()
-                homeHomeFoundScreen()
-                homeHomeMeScreen()
-            }
+        }, snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
+        NavHost(
+            navController = navController,
+            startDestination = Screen.HomeFirst.page,
+            modifier = Modifier
+                .padding(padding)
+                .consumeWindowInsets(padding)
+                .windowInsetsPadding(
+                    WindowInsets.safeDrawing.only(
+                        WindowInsetsSides.Horizontal,
+                    ),
+                )
+        ) {
+            homeFirstScreen(viewModel)
+            homeHomeFoundScreen()
+            homeHomeMeScreen()
         }
+    }
 }
 
 @SuppressLint("UnrememberedGetBackStackEntry")
@@ -105,9 +112,20 @@ private fun NiaBottomBar(
                             restoreState = true
                         }
                         when (destination) {
-                            TopLevelDestination.HOME_FIRST -> navHostController.navigate(route = Screen.HomeFirst.page, navOptions = topLevelNavOptions)
-                            TopLevelDestination.HOME_OTHER -> navHostController.navigate(route = Screen.HomeOther.page, navOptions = topLevelNavOptions)
-                            TopLevelDestination.HOME_ME -> navHostController.navigate(route = Screen.HomeMe.page, navOptions = topLevelNavOptions)
+                            TopLevelDestination.HOME_FIRST -> navHostController.navigate(
+                                route = Screen.HomeFirst.page,
+                                navOptions = topLevelNavOptions
+                            )
+
+                            TopLevelDestination.HOME_OTHER -> navHostController.navigate(
+                                route = Screen.HomeOther.page,
+                                navOptions = topLevelNavOptions
+                            )
+
+                            TopLevelDestination.HOME_ME -> navHostController.navigate(
+                                route = Screen.HomeMe.page,
+                                navOptions = topLevelNavOptions
+                            )
                         }
                     }
                 },
