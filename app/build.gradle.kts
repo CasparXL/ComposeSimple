@@ -101,7 +101,6 @@ dependencies {
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.paging)
     implementation(libs.gson)
-
     implementation(libs.coil)
     implementation(libs.mmkv)
     implementation(libs.bundles.immersionbar)
