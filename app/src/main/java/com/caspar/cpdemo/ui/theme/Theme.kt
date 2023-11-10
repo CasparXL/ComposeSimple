@@ -62,27 +62,25 @@ fun ComposeDemoTheme(
         colorScheme = lightColorScheme(),
         typography = Typography,
         content = {
-            display.displays.also { ownDisplayList ->
-                ownDisplayList.forEach { // 遍历屏幕
-                    if (it.displayId == Display.DEFAULT_DISPLAY) { // 是否为默认屏幕(主屏)
-                        CompositionLocalProvider(
-                            LocalDensity provides Density(
-                                density = dynamicDensity(1920f,1080f),
-                                fontScale = fontScale
-                            )
-                        ) {
-                            content()
-                        }
-                    } else {
-                        CompositionLocalProvider(
-                            LocalDensity provides Density(
-                                density = dynamicDensity(1920f,1080f),
-                                fontScale = fontScale
-                            )
-                        ) {
-                            Presentation(display = it, onDismissRequest = {  }) {
-                                secondaryScreen()
-                            }
+            display.displays.onEach { // 遍历屏幕
+                if (it.displayId == Display.DEFAULT_DISPLAY) { // 是否为默认屏幕(主屏)
+                    CompositionLocalProvider(
+                        LocalDensity provides Density(
+                            density = dynamicDensity(411F,891F),
+                            fontScale = fontScale
+                        )
+                    ) {
+                        content()
+                    }
+                } else {
+                    CompositionLocalProvider(
+                        LocalDensity provides Density(
+                            density = dynamicDensity(1920f,1080f),
+                            fontScale = fontScale
+                        )
+                    ) {
+                        Presentation(display = it, onDismissRequest = {  }) {
+                            secondaryScreen()
                         }
                     }
                 }
