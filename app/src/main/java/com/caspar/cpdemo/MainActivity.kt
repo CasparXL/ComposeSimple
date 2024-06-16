@@ -60,7 +60,7 @@ fun TestCompose() {
         visibilityThreshold = 0.1F,
         finishedListener = {
             startAnimation = !startAnimation
-        }
+        }, label = ""
     )
     val pathMeasure = PathMeasure()
 

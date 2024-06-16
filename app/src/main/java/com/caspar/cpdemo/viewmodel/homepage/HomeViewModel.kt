@@ -1,5 +1,7 @@
 package com.caspar.cpdemo.viewmodel.homepage
 
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
@@ -16,16 +18,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
-    val toast = MutableSharedFlow<String>()
+    val snackBarHost = SnackbarHostState()
+    val topList = MutableStateFlow<List<FishPond>>(listOf())
 
     //点击选中条目
     val infoIndex = MutableStateFlow(listOf(""))
+
     //使用combine对Flow进行链接，其中任意Flow发生改变，会刷新整个与Flow相关的所有UI
     val list = Pager(PagingConfig(pageSize = 20)) {
         ArticleInfoPagingSource(repository)
-    }.flow.cachedIn(viewModelScope).combine(infoIndex){ list, changedItem ->
-        list.map { ar->
-            if (changedItem.contains(ar.id)){
+    }.flow.cachedIn(viewModelScope).combine(infoIndex) { list, changedItem ->
+        list.map { ar ->
+            if (changedItem.contains(ar.id)) {
                 ar.copy(nickname = "测试")
             } else {
                 ar
@@ -36,20 +40,17 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     /**
      * 更新数据源,由于关联了page相关，所以UI也会重新更改
      */
-    fun updateIndex(index:String){
+    fun updateIndex(index: String) {
         viewModelScope.launch {
             if (!infoIndex.value.contains(index)) {
                 infoIndex.emit(infoIndex.value.toMutableList().apply {
                     add(index)
                 })
             } else {
-                toast.emit("请勿重新点击")
-                delay(2000)
-                toast.emit("")
+                snackBarHost.showSnackbar(message = "请勿重新点击")
             }
         }
     }
-    val topList = MutableStateFlow<List<FishPond>>(listOf())
 
     fun getList() {
         viewModelScope.launch {

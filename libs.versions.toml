@@ -14,10 +14,10 @@ compose = "1.6.8"
 composeActivity = "1.9.0"
 composeMaterial = "1.6.8"
 composeMaterial3 = "1.2.1"
-composeNavigation = "2.6.0"
+composeNavigation = "2.7.5"
 accompanistSwiperefresh = "0.30.1"
 composeHilt = "1.2.0"
-ktor = "2.3.0"
+ktor = "2.3.5"
 okhttpLog = "5.0.0-alpha.11"
 lifecycleRuntimeKtx = "2.8.2"
 lifecycleRuntimeCompose = "2.8.2"
@@ -88,7 +88,7 @@ debug_compose_ui_test = { group = "androidx.compose.ui", name = "ui-test-manifes
 #about kotlin compose
 compose = ["compose-ui","compose-ui-preview","compose-activity","compose-material","compose-material3","compose-navigation","compose-swiperefresh","compose-flowlayout"]
 kapt = ["hilt_compiler"]
-hilt_navigation = ["hilt_compose","hilt_compose_navigation"]
+hilt_navigation = ["hilt_compose","hilt_compose_navigation","hilt_android"]
 paging = ["paging-runtime","paging-compose"]
 android_test_impl = ["android_test_ext","android_test_espresso","android_test_compose_ui"]
 debug_impl = ["debug_compose_ui","debug_compose_ui_test"]

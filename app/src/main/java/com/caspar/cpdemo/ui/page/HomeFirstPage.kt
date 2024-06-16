@@ -8,16 +8,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.TextField
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,8 +23,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -44,17 +38,13 @@ import com.caspar.cpdemo.R
 import com.caspar.cpdemo.bean.InfoList
 import com.caspar.cpdemo.ext.getLocalDataTime
 import com.caspar.cpdemo.ext.timeFormatMillis
-import com.caspar.cpdemo.utils.log.LogUtil
 import com.caspar.cpdemo.viewmodel.homepage.HomeViewModel
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 /**
  * 首页第一个界面[ProjectScreen.HOME_FISH_POND]
  */
 @Composable
-fun FishScreen() {
+fun FishScreen(viewModel: HomeViewModel) {
     Column {
         Text(
             text = "鱼塘",
@@ -76,13 +66,13 @@ fun FishScreen() {
             textAlign = TextAlign.Center,
         )
         TopicList()
-        FishList()
+        FishList(viewModel)
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
+private fun FishList(viewModel: HomeViewModel) {
     val list = viewModel.list.collectAsLazyPagingItems()
     val pullRefresh = rememberPullRefreshState(
         refreshing = list.loadState.refresh is LoadState.Loading,
@@ -90,12 +80,6 @@ private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
             viewModel.getList()
             list.refresh()
         })
-    val toast = viewModel.toast.collectAsStateWithLifecycle(initialValue = "")
-    if (toast.value.isNotEmpty()) {
-        Snackbar {
-            Text(text = toast.value)
-        }
-    }
     Box(
         modifier = Modifier
             .pullRefresh(pullRefresh)
