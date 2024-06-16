@@ -1,4 +1,4 @@
-package com.klsy.cashier.app.ui.view
+package com.caspar.cpdemo.ui.view
 
 
 import android.app.Presentation

@@ -4,7 +4,6 @@ import com.caspar.cpdemo.R
 import com.caspar.cpdemo.ui.icon.Icon
 import com.caspar.cpdemo.ui.icon.NiaIcons
 
-
 /**
  * Type for the top level destinations in the application. Each of these destinations
  * can contain one or more screens (based on the window size). Navigation from one screen to the

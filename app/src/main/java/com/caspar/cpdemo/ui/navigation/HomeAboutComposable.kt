@@ -8,13 +8,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.caspar.cpdemo.ui.page.FishScreen
 import com.caspar.cpdemo.ui.page.OtherPage
 import com.caspar.cpdemo.viewmodel.homepage.HomeViewModel
-
 
 fun NavGraphBuilder.homeHomeMeScreen() {
     composable(route = Screen.HomeMe.page) {

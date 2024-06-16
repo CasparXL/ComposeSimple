@@ -1,7 +1,6 @@
 package com.caspar.cpdemo.viewmodel.homepage
 
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
@@ -9,8 +8,6 @@ import com.caspar.cpdemo.bean.FishPond
 import com.caspar.cpdemo.bean.paging.ArticleInfoPagingSource
 import com.caspar.cpdemo.di.domain.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -22,7 +19,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     val topList = MutableStateFlow<List<FishPond>>(listOf())
 
     //点击选中条目
-    val infoIndex = MutableStateFlow(listOf(""))
+    private val infoIndex = MutableStateFlow(listOf(""))
 
     //使用combine对Flow进行链接，其中任意Flow发生改变，会刷新整个与Flow相关的所有UI
     val list = Pager(PagingConfig(pageSize = 20)) {

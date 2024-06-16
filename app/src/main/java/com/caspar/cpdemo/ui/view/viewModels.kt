@@ -1,4 +1,4 @@
-package com.klsy.cashier.app.ui.view
+package com.caspar.cpdemo.ui.view
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModel

@@ -2,7 +2,6 @@ package com.caspar.cpdemo.ui.page
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -16,8 +15,6 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -31,15 +28,13 @@ import com.caspar.cpdemo.ui.navigation.*
 import com.caspar.cpdemo.ui.theme.ComposeDemoTheme
 import com.caspar.cpdemo.utils.log.LogUtil
 import com.caspar.cpdemo.viewmodel.homepage.HomeViewModel
-import kotlinx.coroutines.launch
 
 
-val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
+val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @OptIn(
-    ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class,
-    ExperimentalLayoutApi::class
+    ExperimentalComposeUiApi::class
 )
 @Composable
 fun HomeScreen(

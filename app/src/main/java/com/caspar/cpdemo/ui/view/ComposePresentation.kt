@@ -1,4 +1,4 @@
-package com.klsy.cashier.app.ui.view
+package com.caspar.cpdemo.ui.view
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -21,7 +21,6 @@ import androidx.activity.contextaware.ContextAware
 import androidx.activity.contextaware.ContextAwareHelper
 import androidx.activity.contextaware.OnContextAvailableListener
 import androidx.activity.result.*
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.annotation.*
 import androidx.compose.runtime.Composable

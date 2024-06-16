@@ -1,28 +1,17 @@
 package com.caspar.cpdemo.ui.theme
 
-import android.app.Activity
 import android.content.res.Configuration
-import android.os.Build
 import android.view.Display
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Density
 import androidx.core.hardware.display.DisplayManagerCompat
-import androidx.core.view.ViewCompat
-import com.klsy.cashier.app.ui.view.Presentation
+import com.caspar.cpdemo.ui.view.Presentation
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

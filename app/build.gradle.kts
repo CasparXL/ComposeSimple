@@ -101,7 +101,6 @@ dependencies {
     implementation(libs.bundles.hilt.navigation)
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.paging)
-    implementation(libs.hilt.android)
     implementation(libs.gson)
     implementation(libs.coil)
     implementation(libs.mmkv)
