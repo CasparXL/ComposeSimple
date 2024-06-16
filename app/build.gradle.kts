@@ -9,6 +9,7 @@ plugins {
     id(libs.plugins.android.application.get().pluginId)
     id(libs.plugins.kotlin.get().pluginId)
     id(libs.plugins.hilt.get().pluginId)
+    id(libs.plugins.compose.get().pluginId)
     id("kotlin-parcelize")
     id("kotlin-kapt")
 }
@@ -16,10 +17,10 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            keyAlias="key0"
-            keyPassword="123456"
+            keyAlias = "key0"
+            keyPassword = "123456"
             storeFile = file("../test.jks")
-            storePassword ="123456"
+            storePassword = "123456"
         }
     }
     namespace = libs.versions.applicationId.get()
@@ -62,9 +63,9 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
+        kotlinCompilerExtensionVersion = "2.0.0"
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         }

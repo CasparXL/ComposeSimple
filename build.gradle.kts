@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.compose) apply false
 }
 
 allprojects {
@@ -12,10 +13,10 @@ allprojects {
         resolutionStrategy.eachDependency {
             if (requested.group == "org.jetbrains.kotlin") {
                 if (requested.name.startsWith("kotlin-stdlib")) {
-                    useVersion("1.9.0")
+                    useVersion("2.0.0")
                 }
                 if (requested.name.startsWith("kotlin-reflect")) {
-                    useVersion("1.9.0")
+                    useVersion("2.0.0")
                 }
             }
         }

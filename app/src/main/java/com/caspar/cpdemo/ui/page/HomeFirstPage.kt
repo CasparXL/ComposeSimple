@@ -39,7 +39,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberAsyncImagePainter
 import com.caspar.cpdemo.R
 import com.caspar.cpdemo.bean.InfoList
@@ -102,7 +101,8 @@ private fun FishList(viewModel: HomeViewModel = hiltViewModel()) {
             .pullRefresh(pullRefresh)
     ) {
         LazyColumn(Modifier.fillMaxSize()) {
-            itemsIndexed(list) { index, article ->
+            items(list.itemCount) { index ->
+                val article = list[index]
                 Spacer(
                     modifier = Modifier
                         .background(Color.Gray.copy(alpha = 0.5F))
